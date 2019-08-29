@@ -3,13 +3,11 @@ package mydatabase
 import (
 	"crypto/sha256"
 	"database/sql"
-	//"encoding/json"
-	//"io/ioutil"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type Users struct {
+type User struct {
 	Username string `json:"username"`
 	Fullname string `json:"fullname"`
 	Email    string `json:"email"`
@@ -19,18 +17,18 @@ type Users struct {
 func BuildDB() (db *sql.DB) {
 	db, err := sql.Open("sqlite3", "./test.db")
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	err = db.Ping()
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	return
 }
 
-func InitializeUserDB(db *sql.DB) {
+func InitializeUsersTable(db *sql.DB) {
 	_, err := db.Exec(
 		`CREATE TABLE IF NOT EXISTS "Users" (
 			"id" integer PRIMARY KEY AUTOINCREMENT, 
@@ -41,7 +39,7 @@ func InitializeUserDB(db *sql.DB) {
 		)`,
 	)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 }
@@ -51,7 +49,7 @@ func StoreUserData(db *sql.DB, u Users) {
 
 	_, err := db.Exec(cmdInsert, u.Username, u.Fullname, u.Email, u.Password)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 }
 
