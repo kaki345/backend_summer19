@@ -44,7 +44,7 @@ func InitializeUsersTable(db *sql.DB) {
 
 }
 
-func StoreUserData(db *sql.DB, u Users) {
+func StoreUserData(db *sql.DB, u User) {
 	cmdInsert := `INSERT INTO Users (username, fullname, email, password) VALUES (?, ?, ?, ?)`
 
 	_, err := db.Exec(cmdInsert, u.Username, u.Fullname, u.Email, u.Password)
@@ -58,21 +58,3 @@ func EncryptPass(pass string) string {
 	newpass := string(encrypted[:])
 	return newpass
 }
-
-// func main() {
-// 	// read json file to struct
-// 	fp, err := ioutil.ReadFile("./test.json")
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	json.Unmarshal(fp, &u)
-
-// 	u.Password = EncryptPass(u.Password)
-		
-// 	db := BuildDB()
-
-// 	InitializeUserDB(db)
-// 	StoreUserData(db, u)
-
-// }
