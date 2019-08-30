@@ -3,6 +3,7 @@ package mydatabase
 import (
 	"crypto/sha256"
 	"database/sql"
+	"log"
 
 	_ "github.com/mattn/go-sqlite3"
 )
